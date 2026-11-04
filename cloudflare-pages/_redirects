@@ -1,3 +1,5 @@
-/admin.html https://jeloura.hatchable.site/admin.html 302
+/admin https://jeloura.hatchable.site/admin 302
+/admin/ https://jeloura.hatchable.site/admin 302
+/admin.html https://jeloura.hatchable.site/admin 302
 /admin.js https://jeloura.hatchable.site/admin.js 302
 /admin-image-upload.js https://jeloura.hatchable.site/admin-image-upload.js 302
