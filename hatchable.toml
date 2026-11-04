@@ -1,0 +1,14 @@
+[[secret]]
+name = "WHATSAPP_ACCESS_TOKEN"
+required = false
+description = "رمز WhatsApp Business Cloud API لإرسال إشعار الطلبات تلقائياً إلى رقم Jeloura."
+
+[[secret]]
+name = "WHATSAPP_PHONE_NUMBER_ID"
+required = false
+description = "معرّف رقم الهاتف المرسل في WhatsApp Business Cloud API."
+
+[[secret]]
+name = "WHATSAPP_TEMPLATE_NAME"
+required = false
+description = "اسم قالب إشعار الطلب المعتمد في Meta WhatsApp Business."
