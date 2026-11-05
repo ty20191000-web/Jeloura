@@ -37,3 +37,16 @@ The live Hatchable deployment is currently v8. This repository is a source-contr
 The Cloudflare Pages storefront is on a different origin from `jeloura.hatchable.site`. The Hatchable public API must explicitly allow the final Pages origin and handle browser OPTIONS preflight requests for GET and POST. This has not yet been configured or verified. Until CORS is enabled and tested, do not switch the production storefront to Cloudflare Pages; keep using the Hatchable live site.
 
 No Cloudflare Pages project has been created or deployed yet. No database data or customer records are included in this repository.
+
+## Automatic Cloudflare Workers deployment
+
+The repository includes `wrangler.toml` and `.github/workflows/deploy-cloudflare-workers.yml`.
+A push to `main` that changes `cloudflare-pages/**` or `wrangler.toml` starts a deployment to the Worker named `jeloura`.
+
+Configure these repository Actions secrets once:
+- `CLOUDFLARE_API_TOKEN`: a Cloudflare API token authorized to deploy Workers.
+- `CLOUDFLARE_ACCOUNT_ID`: the account ID that owns `jeloura.beauty1.workers.dev`.
+
+Then run the workflow once from **GitHub → Actions → Deploy Jeloura to Cloudflare Workers → Run workflow**. Future matching pushes deploy automatically.
+
+The administration entry URL is `https://jeloura.beauty1.workers.dev/admin`. It redirects to the existing secure login at `https://jeloura.hatchable.site/admin-login.html`. The legacy `/admin-login.htm` path redirects to the canonical `.html` page.
