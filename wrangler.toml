@@ -4,4 +4,3 @@ workers_dev = true
 
 [assets]
 directory = "./cloudflare-pages"
-binding = "ASSETS"
