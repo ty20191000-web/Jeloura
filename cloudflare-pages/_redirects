@@ -1,7 +1,1 @@
-/admin https://jeloura.hatchable.site/admin-login.html 302
-/admin/ https://jeloura.hatchable.site/admin-login.html 302
-/admin-login.htm https://jeloura.hatchable.site/admin-login.html 301
-/admin-login.html https://jeloura.hatchable.site/admin-login.html 302
-/admin.html https://jeloura.hatchable.site/admin.html 302
-/admin.js https://jeloura.hatchable.site/admin.js 302
-/admin-image-upload.js https://jeloura.hatchable.site/admin-image-upload.js 302
+# Admin routes are reverse-proxied by worker.js so the browser stays on workers.dev.

@@ -1,6 +1,9 @@
 name = "jeloura"
+main = "./worker.js"
 compatibility_date = "2026-11-05"
 workers_dev = true
 
 [assets]
 directory = "./cloudflare-pages"
+binding = "ASSETS"
+run_worker_first = ["/admin*", "/api/admin*"]

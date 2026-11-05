@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "cloudflare-pages/**"
+      - "worker.js"
       - "wrangler.toml"
       - ".github/workflows/deploy-cloudflare-workers.yml"
   workflow_dispatch:
