@@ -7,7 +7,7 @@ Jeloura is an Arabic RTL cosmetics storefront.
 - `hatchable-source/` mirrors the Hatchable v8 project source, including API handlers, SQL migrations, admin UI, and configuration.
 - `cloudflare-pages/` is the separate static storefront intended for Cloudflare Pages.
 - PostgreSQL data, order processing, product/shipping APIs, image storage, and the admin dashboard remain on the existing Hatchable project: https://jeloura.hatchable.site
-- The admin dashboard remains hosted on Hatchable at https://jeloura.hatchable.site/admin.html.
+- The admin dashboard entry URL is https://jeloura.beauty1.workers.dev/admin. Cloudflare routes `/admin` to the custom Hatchable admin login so the existing secure session and APIs continue to work.
 
 ## Cloudflare Pages settings
 
