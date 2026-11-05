@@ -13,6 +13,8 @@ const ADMIN_FILES = new Set([
   "/admin-auth.js",
   "/admin-image-upload.js",
   "/admin-style.css",
+  "/__hatchable/config.js",
+  "/__hatchable/badge.js",
 ]);
 
 function isAdminProxyPath(pathname) {
@@ -84,7 +86,7 @@ async function proxyAdmin(request) {
     const upstreamResponse = await fetch(upstreamRequest);
     const responseHeaders = new Headers(upstreamResponse.headers);
 
-    // A proxied response must never send the visitor to the Hatchable host.
+    // Never redirect the browser from Workers back to the Hatchable hostname.
     const location = responseHeaders.get("Location");
     if (location) {
       try {
@@ -103,8 +105,7 @@ async function proxyAdmin(request) {
       }
     }
 
-    // The session cookie is host-only (no Domain attribute), so the browser
-    // stores it for jeloura.beauty1.workers.dev rather than Hatchable.
+    // Admin sessions remain host-only on jeloura.beauty1.workers.dev.
     const cookies = typeof upstreamResponse.headers.getSetCookie === "function"
       ? upstreamResponse.headers.getSetCookie()
       : [];
@@ -119,15 +120,24 @@ async function proxyAdmin(request) {
     }
 
     let body = upstreamResponse.body;
+    const contentType = responseHeaders.get("Content-Type") || "";
 
-    // The storefront's /style.css is different from the admin stylesheet.
-    // Serve the latter through its own same-origin proxy path.
-    if (path === "/admin.html" &&
-        (responseHeaders.get("Content-Type") || "").includes("text/html")) {
+    // The Hatchable runtime injects its own origin into HTML. Repoint that
+    // metadata to the public Workers origin and give the admin its own CSS path.
+    if (contentType.includes("text/html")) {
       const html = await upstreamResponse.text();
       body = html
-        .split('href="/style.css"').join('href="/admin-style.css"')
-        .split("href='/style.css'").join("href='/admin-style.css'");
+        .split(UPSTREAM_ORIGIN).join(incomingUrl.origin)
+        .split('href="/style.css?').join('href="/admin-style.css?')
+        .split('href="/style.css"').join('href="/admin-style.css"');
+      responseHeaders.delete("Content-Length");
+      responseHeaders.delete("Content-Encoding");
+      responseHeaders.delete("ETag");
+      responseHeaders.delete("Last-Modified");
+    } else if (path === "/__hatchable/config.js" &&
+               contentType.includes("javascript")) {
+      const source = await upstreamResponse.text();
+      body = source.split(UPSTREAM_ORIGIN).join(incomingUrl.origin);
       responseHeaders.delete("Content-Length");
       responseHeaders.delete("Content-Encoding");
       responseHeaders.delete("ETag");
